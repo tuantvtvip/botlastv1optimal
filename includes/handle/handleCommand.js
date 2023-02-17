@@ -1,13 +1,13 @@
 module.exports = function ({ api, models, Users, Threads, Currencies }) {
-  const fs = require("fs");
   const stringSimilarity = require('string-similarity'),
     escapeRegex = (str) => str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
     logger = require("../../utils/log.js");
+  const axios = require('axios')
   const moment = require("moment-timezone");
   return async function ({ event }) {
-    const dateNow = Date.now();
+    const dateNow = Date.now()
     const time = moment.tz("Asia/Ho_Chi_minh").format("HH:MM:ss DD/MM/YYYY");
-    const { allowInbox, PREFIX, ADMINBOT, NDH, DeveloperMode, adminOnly, keyAdminOnly, ndhOnly, adminPaseOnly } = global.config;
+    const { allowInbox, PREFIX, ADMINBOT, NDH, DeveloperMode, adminOnly, keyAdminOnly, ndhOnly,adminPaOnly } = global.config;
     const { userBanned, threadBanned, threadInfo, threadData, commandBanned } = global.data;
     const { commands, cooldowns } = global.client;
     var { body, senderID, threadID, messageID } = event;
@@ -17,14 +17,24 @@ module.exports = function ({ api, models, Users, Threads, Currencies }) {
     const prefixRegex = new RegExp(`^(<@!?${senderID}>|${escapeRegex((threadSetting.hasOwnProperty("PREFIX")) ? threadSetting.PREFIX : PREFIX)})\\s*`);
     if (!prefixRegex.test(body)) return;
     const adminbot = require('./../../config.json');
+//// admin -pa /////
+    if(!global.data.allThreadID.includes(threadID) && !ADMINBOT.includes(senderID) && adminbot.adminPaOnly == true)
+    return api.sendMessage("[ 𝐌𝐎𝐃𝐄 ] - 𝐂𝐡𝐢̉ 𝐜𝐮𝐧𝐠 𝐜𝐡𝐮̉ 𝐦𝐨̛́𝐢 đ𝐮̛𝐨̛̣𝐜 𝐬𝐮̛̉ 𝐝𝐮̣𝐧𝐠 𝐛𝐨𝐭 𝐭𝐫𝐨𝐧𝐠 𝐜𝐡𝐚𝐭 𝐫𝐢𝐞̂𝐧𝐠 ❤️", threadID, messageID)
+    ////end 
+
+    if(!ADMINBOT.includes(senderID) && adminbot.adminOnly == true) {
+      if(!ADMINBOT.includes(senderID) && adminbot.adminOnly == true) return api.sendMessage('[ 𝐌𝐎𝐃𝐄 ] - 𝐂𝐡𝐢̉ 𝐜𝐮𝐧𝐠 𝐜𝐡𝐮̉ 𝐦𝐨̛́𝐢 đ𝐮̛𝐨̛̣𝐜 𝐬𝐮̛̉ 𝐝𝐮̣𝐧𝐠 𝐛𝐨𝐭❤️', threadID, messageID) 
+     }
+
+    if (!NDH.includes(senderID) && !ADMINBOT.includes(senderID) && adminbot.ndhOnly == true) {
+      if (!NDH.includes(senderID) && !ADMINBOT.includes(senderID) && adminbot.ndhOnly == true && res.data.status == true) return api.sendMessage('[ 𝐌𝐎𝐃𝐄 ] - 𝐂𝐡𝐢̉ 𝐜𝐨́ 𝐦𝐨̂𝐧 𝐜𝐡𝐮̉ 𝐦𝐨̛́𝐢 𝐜𝐨́ 𝐭𝐡𝐞̂̉ 𝐬𝐮̛̉ 𝐝𝐮̣𝐧𝐠 𝐛𝐨𝐭 😽', threadID, messageID)
+    }
     
-if (!global.data.allThreadID.includes(threadID) && !ADMINBOT.includes(senderID) && adminbot.adminPaseOnly == true) return api.sendMessage("[ MODE ] - Chỉ admin mới được sử dụng bot trong chat riêng.", threadID, messageID)    
-if (!ADMINBOT.includes(senderID) && adminbot.adminOnly == true) return api.sendMessage('[ MODE ] - Chỉ admin bot mới có thể sử dụng bot', threadID, messageID)
-if (!NDH.includes(senderID) && !ADMINBOT.includes(senderID) && adminbot.ndhOnly == true) return api.sendMessage('[ MODE ] - Chỉ người hỗ trợ bot mới có thể sử dụng bot', threadID, messageID)
     const dataAdbox = require('./../../modules/commands/cache/data.json');
     var threadInf = (threadInfo.get(threadID) || await Threads.getInfo(threadID));
     const findd = threadInf.adminIDs.find(el => el.id == senderID);
-    if (dataAdbox.adminbox.hasOwnProperty(threadID) && dataAdbox.adminbox[threadID] == true && !ADMINBOT.includes(senderID) && !findd && event.isGroup == true) return api.sendMessage('[ MODE ] - Chỉ admin nhóm mới được sử dụng bot!!', event.threadID, event.messageID)
+    if (dataAdbox.adminbox.hasOwnProperty(threadID) && dataAdbox.adminbox[threadID] == true && !ADMINBOT.includes(senderID) && !findd && event.isGroup == true) return api.sendMessage('[ 𝐌𝐎𝐃𝐄 ] - 𝐂𝐡𝐢̉ 𝐜𝐨́ 𝐭𝐫𝐮̛𝐨̛̉𝐧𝐠 𝐥𝐚̃𝐨 𝐦𝐨̛́𝐢 𝐜𝐨́ 𝐭𝐡𝐞̂̉ 𝐬𝐮̛̉ 𝐝𝐮̣𝐧𝐠 𝐛𝐨𝐭 🍄', event.threadID, event.messageID)
+    
     if (userBanned.has(senderID) || threadBanned.has(threadID) || allowInbox == ![] && senderID == threadID) {
       if (!ADMINBOT.includes(senderID.toString())) {
         if (userBanned.has(senderID)) {
@@ -93,13 +103,13 @@ if (!NDH.includes(senderID) && !ADMINBOT.includes(senderID) && adminbot.ndhOnly 
     if (ADMINBOT.includes(senderID.toString())) permssion = 3;
     else if (!ADMINBOT.includes(senderID) && !NDH.includes(senderID) && find) permssion = 1;
     if (command.config.hasPermssion > permssion) return api.sendMessage(global.getText("handleCommand", "permssionNotEnough", command.config.name), event.threadID, event.messageID);
-
-          if (!client.cooldowns.has(command.config.name)) client.cooldowns.set(command.config.name, new Map());
+     
+       if (!client.cooldowns.has(command.config.name)) client.cooldowns.set(command.config.name, new Map());
         const timestamps = client.cooldowns.get(command.config.name);;
         const expirationTime = (command.config.cooldowns || 1) * 1000;
         if (timestamps.has(senderID) && dateNow < timestamps.get(senderID) + expirationTime) 
-      return api.sendMessage(`⏱ Bạn đang trong thời gian chờ!\n Vui lòng thử lại sau ${((timestamps.get(senderID) + expirationTime - dateNow)/1000).toString().slice(0, 5)}s nữa nhé`, threadID, messageID);
-    
+      return api.setMessageReaction('👻', event.messageID, err => (err) ? logger('Đã có lỗi xảy ra khi thực thi setMessageReaction', 2) : '', !![]);
+
     var getText2;
     if (command.languages && typeof command.languages == 'object' && command.languages.hasOwnProperty(global.config.language))
       getText2 = (...values) => {
