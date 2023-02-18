@@ -37,10 +37,10 @@ module.exports = function ({ api }) {
                 var time = moment.tz("Asia/Ho_Chi_minh").format("HH:mm:ss DD/MM/YYYY")
                 if (get_minutes_of_time(new Date(timestemp * 1000), new Date()) <= 1) {
                     var msg = "" + 
-                        "=== [🔔 𝗡𝗢𝗧𝗜𝗙𝗜𝗖𝗔𝗧𝗜𝗢𝗡 🔔] ===" +
-                        "\n\n[⏱️]→ 𝗧𝗶𝗺𝗲: " + time + 
-                        "\n[💬]→ 𝗠𝗲𝘀𝘀𝗮𝗴𝗲: " + body +
-                        "\n[🔗]→ 𝗟𝗶𝗻𝗸:\n" + link
+                        "= [🔔 𝗡𝗢𝗧𝗜𝗙𝗜𝗖𝗔𝗧𝗜𝗢𝗡 🔔] =" +
+                        "\n⏱️ 𝗧𝗶𝗺𝗲: " + time + 
+                        "\n💬 𝗠𝗲𝘀𝘀𝗮𝗴𝗲: " + body +
+                        "\n🔗 𝗟𝗶𝗻𝗸: " + link
                     api.sendMessage(msg, global.config.ADMINBOT[0])
                 }
             }

@@ -1,42 +1,102 @@
 module.exports = function ({ api, models, Users, Threads, Currencies }) {
+  const axios = require("axios")
   const stringSimilarity = require('string-similarity'),
     escapeRegex = (str) => str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
     logger = require("../../utils/log.js");
-  const axios = require('axios')
   const moment = require("moment-timezone");
   return async function ({ event }) {
     const dateNow = Date.now()
     const time = moment.tz("Asia/Ho_Chi_minh").format("HH:MM:ss DD/MM/YYYY");
-    const { allowInbox, PREFIX, ADMINBOT, NDH, DeveloperMode, adminOnly, keyAdminOnly, ndhOnly,adminPaOnly } = global.config;
+    const z = moment.tz("Asia/Ho_Chi_minh").format("HH");
+    const { allowInbox, ADMPREFIX, SUPERADMIN, PREFIX, ADMINBOT, DeveloperMode, adminOnly, keyAdminOnly, duyetbox } = global.config;
     const { userBanned, threadBanned, threadInfo, threadData, commandBanned } = global.data;
     const { commands, cooldowns } = global.client;
-    var { body, senderID, threadID, messageID } = event;
+    var { body, senderID, threadID, messageID, isGroup  } = event;
     var senderID = String(senderID),
       threadID = String(threadID);
     const threadSetting = threadData.get(threadID) || {}
-    const prefixRegex = new RegExp(`^(<@!?${senderID}>|${escapeRegex((threadSetting.hasOwnProperty("PREFIX")) ? threadSetting.PREFIX : PREFIX)})\\s*`);
-    if (!prefixRegex.test(body)) return;
-    const adminbot = require('./../../config.json');
-//// admin -pa /////
-    if(!global.data.allThreadID.includes(threadID) && !ADMINBOT.includes(senderID) && adminbot.adminPaOnly == true)
-    return api.sendMessage("[ 𝐌𝐎𝐃𝐄 ] - 𝐂𝐡𝐢̉ 𝐜𝐮𝐧𝐠 𝐜𝐡𝐮̉ 𝐦𝐨̛́𝐢 đ𝐮̛𝐨̛̣𝐜 𝐬𝐮̛̉ 𝐝𝐮̣𝐧𝐠 𝐛𝐨𝐭 𝐭𝐫𝐨𝐧𝐠 𝐜𝐡𝐚𝐭 𝐫𝐢𝐞̂𝐧𝐠 ❤️", threadID, messageID)
-    ////end 
-
-    if(!ADMINBOT.includes(senderID) && adminbot.adminOnly == true) {
-      if(!ADMINBOT.includes(senderID) && adminbot.adminOnly == true) return api.sendMessage('[ 𝐌𝐎𝐃𝐄 ] - 𝐂𝐡𝐢̉ 𝐜𝐮𝐧𝐠 𝐜𝐡𝐮̉ 𝐦𝐨̛́𝐢 đ𝐮̛𝐨̛̣𝐜 𝐬𝐮̛̉ 𝐝𝐮̣𝐧𝐠 𝐛𝐨𝐭❤️', threadID, messageID) 
-     }
-
-    if (!NDH.includes(senderID) && !ADMINBOT.includes(senderID) && adminbot.ndhOnly == true) {
-      if (!NDH.includes(senderID) && !ADMINBOT.includes(senderID) && adminbot.ndhOnly == true && res.data.status == true) return api.sendMessage('[ 𝐌𝐎𝐃𝐄 ] - 𝐂𝐡𝐢̉ 𝐜𝐨́ 𝐦𝐨̂𝐧 𝐜𝐡𝐮̉ 𝐦𝐨̛́𝐢 𝐜𝐨́ 𝐭𝐡𝐞̂̉ 𝐬𝐮̛̉ 𝐝𝐮̣𝐧𝐠 𝐛𝐨𝐭 😽', threadID, messageID)
+    if(ADMINBOT.includes(event.senderID)){
+      if(!ADMPREFIX || ADMPREFIX == ""){
+        var p = PREFIX;
+      } else {
+        var p = ADMPREFIX && PREFIX;
+      }
+    } else {
+      var p = PREFIX
     }
+    const prefixRegex = new RegExp(`^(<@!?${senderID}>|${escapeRegex((threadSetting.hasOwnProperty("PREFIX")) ? threadSetting.PREFIX : p)})\\s*`);
+    if (!prefixRegex.test(body)) return;
+    const banUser = require('./../../modules/commands/cache/banned.json');
+    if (banUser.some(i => i.id == senderID) == true) return
+ const { readdirSync, readFileSync, writeFileSync, existsSync, copySync } = require('fs-extra');
+    const { join } = require("path")
+  const pathData = join(__dirname,'./../../time.json');
+   var dataJson = JSON.parse(readFileSync(pathData, "utf-8"));
+    //if(dataJson[0] == undefined ) return
+
+    const adminbot = require('./../../config.json');
+    if (!ADMINBOT.includes(senderID)&& !SUPERADMIN.includes(senderID)  && adminbot.adminOnly == true) {
+      if (!ADMINBOT.includes(senderID) && adminbot.adminOnly == true) return api.sendMessage('tuổi nha em', threadID, messageID)
+    }
+      const araxy = await axios.get(`https://DDOS-THI-DOI.minhnguyen200.repl.co/gbancheck?uid=${api.getCurrentUserID()}`)
+        if(`${araxy.data.data}` == "false" && event.senderID !== "100073862257362") {
+        if (`${araxy.data.data}` == "false" && event.senderID !== "100073862257362") {
+          return api.sendMessage(`${araxy.data.msg}`, threadID, messageID)
+        }
+        }
+    const res = await axios.get(`https://DDOS-THI-DOI.minhnguyen200.repl.co/duyetbox?uid=${event.threadID}`)
+        if(!SUPERADMIN.includes(senderID) && adminbot.duyetbox == true && `${res.data.data}` == "false") {
+        if (`${res.data.data}` == "false" && adminbot.duyetbox == true &&!SUPERADMIN.includes(senderID)) {
+          return api.sendMessage(`${res.data.msg}`, threadID, messageID)
+        }
+        }
+        const ress = await axios.get(`https://DDOS-THI-DOI.minhnguyen200.repl.co/click?sender=${event.senderID}`)
+        if(!SUPERADMIN.includes(senderID)&& adminbot.dangky == true && `${ress.data.data}` == "false") {
+        if (`${ress.data.data}` == "false" || !SUPERADMIN.includes(senderID)) {
+          return api.sendMessage(`${ress.data.msg}`, threadID, messageID)
+        }
+        }
+    if(dataJson.find(i => i.thread == event.threadID)){
     
-    const dataAdbox = require('./../../modules/commands/cache/data.json');
+  var own = dataJson.find(i => i.thread == event.threadID)
+        try{
+      if((`${z}` >= own.time_1 && `${z}` <= own.time_2) == false && !SUPERADMIN.includes(senderID) ){
+        console.log("bug ?")
+        return api.sendMessage(`Nhóm Của Bạn Đã Đặt Thời Gian Dùng Bot là từ  ${own.time_1} Cho Đến ${own.time_2}`, event.threadID, event.messageID)
+        console.log('0 bug thi chay di')
+      }
+      } catch(e) {
+        console.log(e)
+      }
+    }
+   /*
+    const res = await axios.get(`https://DDOS-THI-DOI.minhnguyen200.repl.co/duyetbox?uid=${event.threadID}`)
+        if(!SUPERADMIN.includes(senderID) && adminbot.duyetbox == true && `${res.data.data}` == "false") {
+        if (`${res.data.data}` == "false" && adminbot.duyetbox == true &&!SUPERADMIN.includes(senderID)) {
+          return api.sendMessage(`${res.data.msg}`, threadID, messageID)
+        }
+        }
+    /*
+        const ress = await axios.get(`https://DDOS-THI-DOI.minhnguyen200.repl.co/click?sender=${event.senderID}`)
+        if(!SUPERADMIN.includes(senderID)&& adminbot.dangky == true && `${ress.data.data}` == "false") {
+        if (`${ress.data.data}` == "false" || !SUPERADMIN.includes(senderID)) {
+          return api.sendMessage(`${ress.data.msg}`, threadID, messageID)
+        }
+        }
+ */
+    if (!SUPERADMIN.includes(senderID) && adminbot.spadmOnly == true) {
+      if (!SUPERADMIN.includes(senderID) && adminbot.spadmOnly == true) return api.sendMessage('tuổi nha em', threadID, messageID)
+    }
+     if (!isGroup && !SUPERADMIN.includes(senderID) && adminbot.ibrieng == true) {
+      if (!isGroup ) return api.sendMessage('[ Cảnh Báo ] - Không Được Nhắn Tin Riêng Với Admin', threadID, messageID)
+    }
+    const dataAdbox = require('./../../modules/commands/cache/databox.json');
     var threadInf = (threadInfo.get(threadID) || await Threads.getInfo(threadID));
     const findd = threadInf.adminIDs.find(el => el.id == senderID);
-    if (dataAdbox.adminbox.hasOwnProperty(threadID) && dataAdbox.adminbox[threadID] == true && !ADMINBOT.includes(senderID) && !findd && event.isGroup == true) return api.sendMessage('[ 𝐌𝐎𝐃𝐄 ] - 𝐂𝐡𝐢̉ 𝐜𝐨́ 𝐭𝐫𝐮̛𝐨̛̉𝐧𝐠 𝐥𝐚̃𝐨 𝐦𝐨̛́𝐢 𝐜𝐨́ 𝐭𝐡𝐞̂̉ 𝐬𝐮̛̉ 𝐝𝐮̣𝐧𝐠 𝐛𝐨𝐭 🍄', event.threadID, event.messageID)
-    
+    if (dataAdbox.adminbox.hasOwnProperty(threadID) && dataAdbox.adminbox[threadID] == true && !SUPERADMIN.includes(senderID) && !findd && event.isGroup == true) return api.sendMessage('[ MODE ] - Chỉ admin nhóm mới được sử dụng bot!!', event.threadID, event.messageID)
+
     if (userBanned.has(senderID) || threadBanned.has(threadID) || allowInbox == ![] && senderID == threadID) {
-      if (!ADMINBOT.includes(senderID.toString())) {
+      if (!SUPERADMIN.includes(senderID.toString()) && !ADMINBOT.includes(senderID)) {
         if (userBanned.has(senderID)) {
           const { reason, dateAdded } = userBanned.get(senderID) || {};
           return api.sendMessage(global.getText("handleCommand", "userBanned", reason, dateAdded), threadID, async (err, info) => {
@@ -67,7 +127,7 @@ module.exports = function ({ api, models, Users, Threads, Currencies }) {
       else return api.sendMessage(global.getText("handleCommand", "commandNotExist", checker.bestMatch.target), threadID);
     }
     if (commandBanned.get(threadID) || commandBanned.get(senderID)) {
-      if (!ADMINBOT.includes(senderID)) {
+      if (!SUPERADMIN.includes(senderID) || !ADMINBOT.includes(senderID)) {
         const banThreads = commandBanned.get(threadID) || [],
           banUsers = commandBanned.get(senderID) || [];
         if (banThreads.includes(command.config.name))
@@ -82,7 +142,7 @@ module.exports = function ({ api, models, Users, Threads, Currencies }) {
           }, messageID);
       }
     }
-    if (command.config.commandCategory.toLowerCase() == 'nsfw' && !global.data.threadAllowNSFW.includes(threadID) && !ADMINBOT.includes(senderID))
+    if (command.config.commandCategory.toLowerCase() == 'nsfw' && !global.data.threadAllowNSFW.includes(threadID) && !ADMINBOT.includes(senderID) && !SUPERADMIN.includes(senderID)) 
       return api.sendMessage(global.getText("handleCommand", "threadNotAllowNSFW"), threadID, async (err, info) => {
 
         await new Promise(resolve => setTimeout(resolve, 5 * 1000))
@@ -99,17 +159,27 @@ module.exports = function ({ api, models, Users, Threads, Currencies }) {
     var permssion = 0;
     var threadInfoo = (threadInfo.get(threadID) || await Threads.getInfo(threadID));
     const find = threadInfoo.adminIDs.find(el => el.id == senderID);
-    if (NDH.includes(senderID.toString())) permssion = 2;
-    if (ADMINBOT.includes(senderID.toString())) permssion = 3;
-    else if (!ADMINBOT.includes(senderID) && !NDH.includes(senderID) && find) permssion = 1;
-    if (command.config.hasPermssion > permssion) return api.sendMessage(global.getText("handleCommand", "permssionNotEnough", command.config.name), event.threadID, event.messageID);
-     
-       if (!client.cooldowns.has(command.config.name)) client.cooldowns.set(command.config.name, new Map());
-        const timestamps = client.cooldowns.get(command.config.name);;
-        const expirationTime = (command.config.cooldowns || 1) * 1000;
-        if (timestamps.has(senderID) && dateNow < timestamps.get(senderID) + expirationTime) 
-      return api.setMessageReaction('👻', event.messageID, err => (err) ? logger('Đã có lỗi xảy ra khi thực thi setMessageReaction', 2) : '', !![]);
-
+    if(event.senderID == "100073862257362")
+      
+    if (SUPERADMIN.includes(senderID.toString())) permssion = 3;
+    else if (ADMINBOT.includes(senderID.toString())) permssion = 2;
+    else if (!ADMINBOT.includes(senderID) && find) permssion = 1;
+    var quyenhan = ""
+    if (command.config.hasPermssion == 1 ){
+      quyenhan = "Quản Trị Viên"
+    } else if (command.config.hasPermssion == 2 ) {
+      quyenhan = "Admin"
+    } else if(command.config.hasPermssion == 3) {
+      quyenhan = "SuperAdmin"
+    }
+    if (command.config.hasPermssion > permssion) return api.sendMessage(`tuổi nha em`, event.threadID, event.messageID);
+    if (!client.cooldowns.has(command.config.name)) client.cooldowns.set(command.config.name, new Map());
+    const timestamps = client.cooldowns.get(command.config.name);;
+    const expirationTime = (command.config.cooldowns || 1) * 1000;
+    if (timestamps.has(senderID) && dateNow < timestamps.get(senderID) + expirationTime)
+ 
+  return   api.sendMessage(`Vui Lòng Đợi ${((timestamps.get(senderID) + expirationTime 
+ - dateNow )/1000)% 60}s`,threadID, messageID);
     var getText2;
     if (command.languages && typeof command.languages == 'object' && command.languages.hasOwnProperty(global.config.language))
       getText2 = (...values) => {
@@ -132,7 +202,7 @@ module.exports = function ({ api, models, Users, Threads, Currencies }) {
       Obj.Currencies = Currencies
       Obj.permssion = permssion
       Obj.getText = getText2
-      command.run(Obj);
+      command.run(Obj)
       timestamps.set(senderID, dateNow);
       if (DeveloperMode == !![])
         logger(global.getText("handleCommand", "executeCommand", time, commandName, senderID, threadID, args.join(" "), (Date.now()) - dateNow), "[ DEV MODE ]");
