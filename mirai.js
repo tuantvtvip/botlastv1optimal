@@ -1,18 +1,16 @@
 //////////////////////////////////////////////////////
 //========= Require all variable need use =========//
 /////////////////////////////////////////////////////
-const {readdirSync,readFileSync,writeFileSync,existsSync,unlinkSync,rm} = require("fs-extra");
-var log = require("./utils/log");
-const {join,resolve} = require("path");
-const chalk = require("chalk");
-const {execSync} = require('child_process');
+const { readdirSync, readFileSync, writeFileSync, existsSync, unlinkSync, rm } = require("fs-extra");
+const { join, resolve } = require("path");
+const { execSync } = require('child_process');
 const logger = require("./utils/log.js");
 const login = require("fca-horizon-remake"), moment = require("moment-timezone");
 const timeStart = Date.now();
 const axios = require("axios");
 const listPackage = JSON.parse(readFileSync('./package.json')).dependencies;
 const listbuiltinModules = require("module").builtinModules;
-log("Mirai BOT", "Đang khởi tạo các biến...");
+const chalk = require("chalk")
 
 global.client = new Object({
     commands: new Map(),
@@ -68,24 +66,19 @@ global.data = new Object({
     allUserID: new Array(),
     allCurrenciesID: new Array(),
     allThreadID: new Array()
-    
 });
 
-
-
 global.utils = require("./utils");
-
+global.youtube = require("./lib/youtube.js");
+global.soundcloud = require("./lib/soundcloud.js");
+global.tiktok = require("./lib/tiktok.js");
 global.nodemodule = new Object();
-
 global.config = new Object();
-
 global.configModule = new Object();
-
 global.moduleData = new Array();
-
 global.language = new Object();
-
-
+global.account = new Object();
+console.log(chalk.bold.hex("#FFFF00").bold("=== Tuantvtvip nhất thế giới ==="));
 
 //////////////////////////////////////////////////////////
 //========= Find and get variable from Config =========//
