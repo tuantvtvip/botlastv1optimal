@@ -5,7 +5,7 @@ module.exports.config = {
 	credits: "tuantvt",
 	description: "Menu, just a menu",
 	usages: "[all/-a] [số trang]",
-	commandCategory: "Trợ Giúp",
+	commandCategory: "Trợ giúp",
 	cooldowns: 2
 };
 

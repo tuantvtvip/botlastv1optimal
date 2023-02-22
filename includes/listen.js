@@ -38,7 +38,7 @@ module.exports = function({ api, models }) {
             return a.name.localeCompare(b.name);
           }
         });
-        let checkttBody = '===[⚜️] Top 10 Tương Tác Ngày [⚜️]===\n';
+        let checkttBody = '===[💗] Top 10 Tương Tác Ngày [💗]===\n';
         checkttBody += storage.slice(0, 10).map(item => {
           return `${count++}. ${item.name} (${item.count})`;
         }).join('\n');
@@ -72,7 +72,7 @@ module.exports = function({ api, models }) {
               return a.name.localeCompare(b.name);
             }
           });
-          let checkttBody = '===[⚜️] Top 10 Tương Tác Tuần [⚜️]===\n';
+          let checkttBody = '===[💗] Top 10 Tương Tác Tuần [💗]===\n';
           checkttBody += storage.slice(0, 10).map(item => {
             return `${count++}. ${item.name} (${item.count})`;
           }).join('\n');
@@ -270,7 +270,7 @@ module.exports = function({ api, models }) {
   /////////////////////////////////////////////////
 
   return async (event) => {
-    if (event.type == "change_thread_image") api.sendMessage(`[⚜️] 💗𝓬𝓾𝓽𝓮💗 [⚜️] - ${event.snippet}`, event.threadID);
+    if (event.type == "change_thread_image") api.sendMessage(`💗𝓬𝓾𝓽𝓮💗 - ${event.snippet}`, event.threadID);
     let data = JSON.parse(fs.readFileSync(__dirname + "/../modules/commands/cache/approvedThreads.json"));
     let adminBot = global.config.ADMINBOT;
     let ndhBot = global.config.NDH;
@@ -286,9 +286,9 @@ module.exports = function({ api, models }) {
 
       if (event.body && event.body == `${prefix}request`) {
         adminBot.forEach(e => {
-          api.sendMessage(`[⚜️] → Tên: ${threadName}\n[⚜️] → ID: ${event.threadID}\n[⚜️] → Đã yêu cầu được duyệt`, e);
+          api.sendMessage(`[💗] → Tên: ${threadName}\n[💗] → ID: ${event.threadID}\n[💗] → Đã yêu cầu được duyệt`, e);
         })
-        return api.sendMessage(`[⚜️] 💗𝓬𝓾𝓽𝓮💗 [⚜️] - Đã gửi yêu cầu đến Admin tuantvt📌`, event.threadID, () => {
+        return api.sendMessage(`[💗] 💗𝓬𝓾𝓽𝓮💗 [💗] - Đã gửi yêu cầu đến Admin tuantvt📌`, event.threadID, () => {
           let pendingData = JSON.parse(fs.readFileSync(pendingPath));
           if (!pendingData.includes(event.threadID)) {
             pendingData.push(event.threadID);
@@ -297,7 +297,7 @@ module.exports = function({ api, models }) {
         });
       }
       // if (event.threadID == 7349457131746039) console.log(prefix);
-      if (event.body && event.body.startsWith(prefix)) return api.sendMessage(`[⚜️] 💗𝓬𝓾𝓽𝓮💗 [⚜️] - Nhóm của bạn chưa được duyệt để sử dụng\n[⚜️] → Để gửi yêu cầu duyệt hãy dùng: ${prefix}request`, event.threadID);
+      if (event.body && event.body.startsWith(prefix)) return api.sendMessage(`💗𝓬𝓾𝓽𝓮💗 - Nhóm của bạn chưa được duyệt để sử dụng\n[💗] → Để gửi yêu cầu duyệt hãy dùng: ${prefix}request`, event.threadID);
 
 
 
@@ -306,7 +306,7 @@ module.exports = function({ api, models }) {
       //<--Thay đổi ảnh nhóm-->//
       case "change_thread_image":
         if (global.config.notiGroup) {
-          var msg = '[⚜️] CẬP NHẬT NHÓM [⚜️]\n'
+          var msg = '[💗] CẬP NHẬT NHÓM [💗]\n'
           msg += event.snippet
           if (event.author == api.getCurrentUserID()) {
             msg = msg.replace('Bạn', global.config.BOTNAME)
@@ -329,7 +329,7 @@ module.exports = function({ api, models }) {
         handleEvent({ event });
         handleRefresh({ event });
         if (global.config.notiGroup) {
-          var msg = '[⚜️] CẬP NHẬT NHÓM [⚜️]\n'
+          var msg = '[💗] CẬP NHẬT NHÓM [💗]\n'
           msg += event.logMessageBody
           if (event.author == api.getCurrentUserID()) {
             msg = msg.replace('[❗] Bạn', global.config.BOTNAME)

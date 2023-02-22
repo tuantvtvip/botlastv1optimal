@@ -12,7 +12,7 @@
 		"MusicLink": "https://drive.google.com/uc?id=1zlAALlxk1TnO7jXtEP_O6yvemtzA2ukA&export=download",
 		"HTML": true
 	},
-	"AutoUpdate": true,
+	"AutoUpdate": false,
 	"AutoLogin": false,
 	"ResetDataLogin": false,
 	"Login2Fa": false,

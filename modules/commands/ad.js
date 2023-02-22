@@ -4,7 +4,7 @@ module.exports.config = {
   hasPermssion: 0,
   credits: "Tuantvt",
   description: "info admin nè",
-  commandCategory: "infomation",
+  commandCategory: "information",
   usages: "ad",
   cooldowns: 5,
   dependencies: {

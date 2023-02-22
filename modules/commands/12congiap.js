@@ -5,7 +5,7 @@ module.exports.config = {
 	hasPermssion: 0,
 	credits: "tuantvt", 
 	description: "Xem thông tin về 12 con giáp",
-	commandCategory: "infomation",
+	commandCategory: "Kiến thức",
 	usages: "12 con giáp",
     cooldowns: 5, 
 };

@@ -5,7 +5,7 @@ module.exports.config = {
 	hasPermssion: 0,
 	credits: "Tuantvt", 
 	description: "Xem 12 thì trong tiếng anh",
-	commandCategory: "infomation",
+	commandCategory: "Kién thức",
 	usages: "12 thì",
     cooldowns: 5, 
 };

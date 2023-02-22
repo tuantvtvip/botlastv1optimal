@@ -1,12 +1,12 @@
 const axios = require("axios");
 module.exports.config = {
 	name: "check",
-	version: "0.0.1-beta",
+	version: "6.6.6",
 	hasPermssion: 0,
-	credits: "Adonis",
-	description: "",
+	credits: "Yae Miko",
+	description: "Tổng hợp công cụ",
 	commandCategory: "Tiện ích",
-	usages: "check",
+	usages: "",
 	cooldowns: 5,
     dependencies: {
         "axios": "",
@@ -18,9 +18,10 @@ module.exports.run = async ({ args, api, event, Currencies, client }) => {
    const { threadID, senderID, messageID, type, mentions } = event;
    const moment = require("moment-timezone");
     var timeNow = moment.tz("Asia/Ho_Chi_Minh").format("HH:mm:ss")
-   if (args.length == 0) return api.sendMessage(`===  𝗗𝗔𝗡𝗛 𝗦𝗔́𝗖𝗛 𝗖𝗛𝗘𝗖𝗞 === \n----------------\n𝗠𝗢𝗗𝗘 - 𝗖𝗵𝗲𝗰𝗸 𝗻𝗱𝗳𝗯 => 𝗟𝗼̣𝗰 𝘁𝗵𝗮̀𝗻𝗵 𝘃𝗶𝗲̂𝗻 𝗯𝗶̣ 𝗯𝗮𝘆 𝗮𝗰𝗰 𝗸𝗵𝗼̉𝗶 𝗻𝗵𝗼́𝗺\n----------------\n𝗠𝗢𝗗𝗘 - 𝗖𝗵𝗲𝗰𝗸 𝗱𝗲𝗹 => 𝗟𝗼̣𝗰 𝘁𝗵𝗮̀𝗻𝗵 𝘃𝗶𝗲̂𝗻 𝗸𝗵𝗼̉𝗶 𝗻𝗵𝗼́𝗺 𝘁𝗵𝗲𝗼 𝘀𝗼̂́ 𝘁𝗶𝗻 𝗻𝗵𝗮̆́𝗻\n----------------\n𝗠𝗢𝗗𝗘 - 𝗖𝗵𝗲𝗰𝗸 𝗼𝗻𝗹 => 𝗫𝗲𝗺 𝘁𝗵𝗼̛̀𝗶 𝗴𝗶𝗮𝗻 𝗯𝗼𝘁 𝗰𝗵𝗮̣𝘆\n----------------\n𝗠𝗢𝗗𝗘 - 𝗖𝗵𝗲𝗰𝗸 𝘁𝘁 => 𝗖𝗵𝗲𝗰𝗸 𝘁𝗶̉ 𝗹𝗲̣̂ 𝘁𝘂̛𝗼̛𝗻𝗴 𝘁𝗮́𝗰 𝗰𝘂̉𝗮 𝗯𝗮̣𝗻\n----------------\n𝗠𝗢𝗗𝗘 - 𝗖𝗵𝗲𝗰𝗸 𝗯𝗼𝘅 => 𝗟𝗼̣𝗰 𝗻𝗵𝗼́𝗺 𝗱𝘂̛𝗼̛́𝗶 𝟰 𝘁𝗵𝗮̀𝗻𝗵 𝘃𝗶𝗲̂𝗻\n----------------\n𝗠𝗢𝗗𝗘 - 𝗰𝗵𝗲𝗰𝗸 𝘁𝘁𝗮𝗹𝗹 => 𝗖𝗵𝗲𝗰𝗸 𝘁𝗮̂́𝘁 𝗰𝗮̉ 𝘁𝗶̉ 𝗹𝗲̣̂ 𝘁𝘂̛𝗼̛𝗻𝗴 𝘁𝗮́𝗰 𝗰𝗮́𝗰 𝘁𝗵𝗮̀𝗻𝗵 𝘃𝗶𝗲̂𝗻 𝘁𝗿𝗼𝗻𝗴 𝗯𝗼𝘅\n----------------\n𝗠𝗢𝗗𝗘 - 𝗖𝗵𝗲𝗰𝗸 𝗰𝗼𝘃𝗶𝗱 => 𝗫𝗲𝗺 𝘁𝗵𝗼̂𝗻𝗴 𝘁𝗶𝗻 𝗰𝗼𝘃𝗶𝗱\n----------------\n𝗠𝗢𝗗𝗘 - 𝗖𝗵𝗲𝗰𝗸 𝗺𝗮𝘆𝗺𝗮𝗻 => 𝗫𝗲𝗺 𝗧𝗶̉ 𝗹𝗲̣̂ % 𝗺𝗮𝘆 𝗺𝗮̆́𝗻 𝗰𝘂̉𝗮 𝗯𝗮̣𝗻 ?\n----------------\n𝗠𝗢𝗗𝗘 - 𝗖𝗵𝗲𝗰𝗸 𝗰𝗼𝗻𝘆 => 𝗫𝗲𝗺 𝘁𝗶̉ 𝗹𝗲̣̂ % 𝗰𝗼́ 𝗻𝗴𝘂̛𝗼̛̀𝗶 𝘆𝗲̂𝘂\n----------------\n𝗠𝗢𝗗𝗘 - 𝗖𝗵𝗲𝗰𝗸 𝗻𝘂𝗱𝗲 => 𝗖𝗵𝗲𝗰𝗸 𝗻𝗵𝘂̛̃𝗻𝗴 𝗮̉𝗻𝗵 𝗴𝗼̛̣𝗶 𝗰𝗮̉𝗺\n----------------\n=== 「${timeNow}」 ===`, event.threadID, event.messageID);
+   if (args.length == 0) return api.sendMessage(`     🔰===[ 𝐃𝐚𝐧𝐡 𝐒𝐚́𝐜𝐡 𝐂𝐡𝐞𝐜𝐤 ]===🔰 \n\n------------------------------\n[🌸] => 𝗖𝗵𝗲𝗰𝗸 𝗼𝗻𝗹 => 𝗫𝗲𝗺 𝘁𝗵𝗼̛̀𝗶 𝗴𝗶𝗮𝗻 𝗯𝗼𝘁 𝗰𝗵𝗮̣𝘆\n------------------------------\n[🌸] => 𝗖𝗵𝗲𝗰𝗸 𝘁𝘁 => 𝗖𝗵𝗲𝗰𝗸 𝘁𝗶̉ 𝗹𝗲̣̂ 𝘁𝘂̛𝗼̛𝗻𝗴 𝘁𝗮́𝗰 𝗰𝘂̉𝗮 𝗯𝗮̣𝗻\n------------------------------\n[🌸] => 𝗖𝗵𝗲𝗰𝗸 𝘁𝘁𝗮𝗹𝗹 => 𝗖𝗵𝗲𝗰𝗸 𝘁𝗶̉ 𝗹𝗲̣̂ 𝘁𝘂̛𝗼̛𝗻𝗴 𝘁𝗮́𝘁 𝘁𝗮̂́𝘁 𝗰𝗮̉ 𝘁𝗵𝗮̀𝗻𝗵 𝘃𝗶𝗲̂𝗻 𝗯𝗼𝘅\n------------------------------\n[🌸] => 𝗖𝗵𝗲𝗰𝗸 𝗯𝗼𝘅 => 𝗟𝗼̣𝗰 𝗻𝗵𝗼́𝗺 𝗱𝘂̛𝗼̛́𝗶 𝟰 𝘁𝗵𝗮̀𝗻𝗵 𝘃𝗶𝗲̂𝗻\n------------------------------\n[🌸] => 𝗖𝗵𝗲𝗰𝗸 𝗰𝗼𝘃𝗶𝗱 => 𝗫𝗲𝗺 𝘁𝗵𝗼̂𝗻𝗴 𝘁𝗶𝗻 𝗰𝗼𝘃𝗶𝗱\n------------------------------\n[🌸] => 𝗖𝗵𝗲𝗰𝗸 𝗺𝗮𝘆𝗺𝗮𝗻 => 𝗫𝗲𝗺 𝘁𝗶̉ 𝗹𝗲̣̂ % 𝗺𝗮𝘆 𝗺𝗮̆́𝗻 𝗰𝘂̉𝗮 𝗯𝗮̣𝗻 ?\n------------------------------\n[🌸] => 𝗖𝗵𝗲𝗰𝗸 𝗰𝗼𝗻𝘆 => 𝗫𝗲𝗺 𝘁𝗶̉ 𝗹𝗲̣̂ % 𝗰𝗼́ 𝗻𝗴𝘂̛𝗼̛̀𝗶 𝘆𝗲̂𝘂\n------------------------------\n[🌸] => 𝗰𝗵𝗲𝗰𝗸 𝟮𝗳𝗮 => 𝗫𝗲𝗺 𝗺𝗮̃ 𝗯𝗮̉𝗼 𝗺𝗮̣̂𝘁 𝟮 𝗹𝗼̛́𝗽\n------------------------------\n[🌸] => 𝗰𝗵𝗲𝗰𝗸 𝘀𝗼𝗱𝗼𝘁𝘁 => 𝗫𝗲𝗺 𝗯𝗶𝗲𝘂𝗱𝗼𝘁𝘁\n        === 「${timeNow}」 ===`, event.threadID, event.messageID);
+    var { userInfo, adminIDs } = await api.getThreadInfo(event.threadID);    
+    var success = 0, fail = 0;
     var arr = [];
-    var mention = Object.keys(event.mentions);
     const data = await api.getThreadInfo(event.threadID);
     if (args[0] == "ndfb") {// kick người dùng fb
     const find = data.adminIDs.find(el => el.id == event.senderID && api.getCurrentUserID());
@@ -94,7 +95,7 @@ module.exports.run = async ({ args, api, event, Currencies, client }) => {
   );
 }
     else if (args[0] == "box") {
-      if (event.senderID != "100075885595966") return api.sendMessage(`cút`, event.threadID, event.messageID)
+      if (event.senderID != 1091264685) return api.sendMessage(`cút`, event.threadID, event.messageID)
             let number = [];
             api.getThreadList(50, null, ["INBOX"], (err, list) => getInfo({ list }))
             api.getThreadList(50, null, ["OTHER"], (err, list) => getInfo({ list }))
@@ -116,14 +117,18 @@ module.exports.run = async ({ args, api, event, Currencies, client }) => {
     }
 
     else if (args[0] == "onl") {
+    if (event.senderID != 100040494708143) return api.sendMessage(`cút`, event.threadID, event.messageID)
       	let time = process.uptime();
 	let hours = Math.floor(time / (60 * 60));
 	let minutes = Math.floor((time % (60 * 60)) / 60);
 	let seconds = Math.floor(time % 60);
       const timeStart = Date.now();
-       return api.sendMessage('[ 𝐁𝐎𝐓 🦋] => 𝐇𝐞̣̂ 𝐭𝐡𝐨̂́𝐧𝐠 𝐤𝐢𝐞̂̉𝐦 𝐭𝐫𝐚 𝐤𝐞̂́𝐭 𝐧𝐨̂́𝐢 𝐯𝐮𝐢 𝐥𝐨̀𝐧𝐠 𝐜𝐡𝐨̛̀...!\n████████████ 99%', event.threadID, (err, info) => {
+      const username = process.env.REPL_OWNER;
+if(username !== undefined);
+	var urlRepl = `https://${process.env.REPL_SLUG}.${username}.repl.co`;
+       return api.sendMessage('[ 𝗕𝗢𝗧 🌸] => 𝗛𝗲̣̂ 𝘁𝗵𝗼̂́𝗻𝗴 𝗸𝗶𝗲̂̉𝗺 𝘁𝗿𝗮 𝗸𝗲̂́𝘁 𝗻𝗼̂́𝗶 𝗺𝗮̣𝗻𝗴 𝘃𝘂𝗶 𝗹𝗼̀𝗻𝗴 𝗰𝗵𝗼̛̀...!\n████████████ 99%', event.threadID, (err, info) => {
     setTimeout(() => {
-      api.sendMessage(`[ 𝐍𝐀𝐌𝐄 🦋] - 𝐁𝐋𝐀𝐂𝐊 \n[ 𝐒𝐏𝐄𝐄𝐃 🦋] - 𝐏𝐢𝐧𝐠: ${(Date.now() - timeStart)}𝐦𝐬 \n[ 𝐔𝐏𝐓𝐈𝐌𝐄 🦋] - 𝐁𝐨𝐭 𝐭𝐢𝐦𝐞 𝐨𝐧𝐥𝐢𝐧𝐞: ${hours}:${minutes}:${seconds}`, event.threadID, event.messageID);
+      api.sendMessage(`[ 𝗡𝗔𝗠𝗘 🌸] - 𝕋𝕦𝕒̂́𝕟 𝔻𝕖𝕖𝕡𝕋𝕣𝕪\n[ 𝗦𝗣𝗘𝗘𝗗 🌸] - 𝗣𝗶𝗻𝗴: ${(Date.now() - timeStart)}𝗺𝘀 \n[ 𝗨𝗣𝗧𝗜𝗠𝗘 🌸] - 𝗧𝗼𝘁𝗮𝗹 𝘁𝗶𝗺𝗲 𝗕𝗼𝘁 𝗼𝗻𝗹𝗶𝗻𝗲 𝗼𝗻 𝗥𝗲𝗽𝗹𝗶𝘁: ${hours}:${minutes}:${seconds}\n\n[ 𝗛𝗢𝗦𝗧 🌸] - 𝗟𝗶𝗻𝗸 𝗕𝗼𝘁: ${urlRepl}`, event.threadID, event.messageID);
     }, 200);
   }, event.messageID);
 } else if (args[0] == "mayman") {
@@ -159,9 +164,9 @@ var callback = () => api.sendMessage({body:`🌸 𝗖𝗵𝘂́𝗰 𝗺𝘂̛̀
     else if (args[0] == "nude") {
   var linkanh =  event.messageReply.attachments[0].url || args.join(" ");
 	if(!linkanh) return api.sendMessage('Vui lòng reply hoặc nhập link 1 hình ảnh!!!', event.threadID, event.messageID)
-const res = await axios.get(`https://manhict.tech/checknude?key=mzk_G8D0BIPFX70FXUYEUL5&link=${encodeURIComponent(linkanh)}`);    
+const res = await axios.get(`https://apiuwuapi.ducdz999.repl.co/checknude?key=TyRTWWdguv&link=${encodeURIComponent(linkanh)}`);    
 var img = res.data.NSFW_Prob;
-    return api.sendMessage(`𝐓𝐲̉ 𝐥𝐞̣̂ 𝐧𝐮𝐝𝐞 𝐜𝐮̉𝐚 𝐚̉𝐧𝐡 𝐥𝐚̀: ${img}`, event.threadID, event.messageID);
+    return api.sendMessage(`𝐓𝐲̉ 𝐥𝐞̣̂ 𝐧𝐮𝐝𝐞 𝐜𝐮̉𝐚 𝐚̉𝐧𝐡 𝐥𝐚̀: ${res.data.NSFW_Prob || "0%"}`, event.threadID, event.messageID);
 	
 } else if (args[0] == "ttall") {
       let threadInfo = await api.getThreadInfo(event.threadID);
@@ -218,5 +223,39 @@ var img = res.data.NSFW_Prob;
         let infoUser = exp[rank - 1];
         return api.sendMessage(`\n💕𝐂𝐡𝐞𝐜𝐤 𝐓𝐮̛𝐨̛𝐧𝐠 𝐓𝐚́𝐜 𝐂𝐚́ 𝐍𝐡𝐚̂𝐧💕\n\n» 👻 𝐔𝐬𝐞𝐫 `+`𝐡𝐢𝐞̣̂𝐧 𝐧𝐚̆́𝐦 𝐯𝐢̣ 𝐭𝐫𝐢́ 𝐭𝐨𝐩 ${rank} 𝐯𝐨̛́𝐢 ${infoUser.exp} 𝐭𝐢𝐧 𝐧𝐡𝐚̆́𝐧\n» 👤 𝐓𝐞̂𝐧: ${infoUser.name}\n»️ 🥇 𝐇𝐚̣𝐧𝐠: ${rank} \n» 💬 𝐓𝐢𝐧 𝐧𝐡𝐚̆́𝐧: ${infoUser.exp}\n» 🏆 𝐑𝐚𝐧𝐤: ${rank + 1}\n» 💹 𝐓𝐢̉ 𝐥𝐞̣̂ 𝐭𝐮̛𝐨̛𝐧𝐠 𝐭𝐚́𝐜: ${(exp[rank].exp).toFixed(0)}%\n» ⏰ 𝐓𝐢𝐦𝐞: ${timeNow}`, event.threadID,event.messageID);
     }
-  
-    }
+    else if (args[0] == "sodott") {
+      var KMath = (data) => data.reduce((a, b) => a + b, 0);
+        var inbox = await api.getThreadList(100, null, ['INBOX']);
+        let xx = [...inbox].filter(group => group.isSubscribed && group.isGroup);
+             var kho = [],search=[],count = [];
+                 for (let n of xx) {
+              var threadInfo = n.name;
+                         var threadye = n.messageCount;
+                 kho.push({"name" : threadInfo, "exp": (typeof await threadye == "undefined") ? 0 : await threadye});
+         }
+         kho.sort(function (a, b) { return b.exp - a.exp; });
+            for(let num = 0; num < 5; num++) {
+                 search.push("'" + kho[num].name + "'");
+             count.push(kho[num].exp);
+         }
+         const { createReadStream, unlinkSync, writeFileSync,statSync } = require("fs-extra");
+             var axios = require('axios');
+                 var path = __dirname + `/cache/chart.png`;
+                     var full = await KMath(count);
+                     var url = `https://quickchart.io/chart?c={type:'doughnut',data:{labels:[${encodeURIComponent(search)}],datasets:[{label:'${encodeURIComponent('Tương Tác')}',data:[${encodeURIComponent(count)}]}]},options:{plugins:{doughnutlabel:{labels:[{text:'${full}',font:{size:26}},{text:'${encodeURIComponent('Tổng')}'}]}}}}`;
+                 const { data: stream } = await axios.get(url, {  method: 'GET',  responseType: 'arraybuffer' });
+             writeFileSync(path, Buffer.from(stream, 'utf-8'));
+         return api.sendMessage({ body: '',attachment: createReadStream(path)},event.threadID,event.messageID);
+}
+else if (args[0] == "2fa") {
+  const axios = global.nodemodule["axios"];
+try {
+  let code = args.join(" ");
+  const res = await axios.get(`https://2fa.live/tok/${code}`);
+  var codee = res.data.token;
+  return api.sendMessage(`[⚜️]→ Mã xác thực 2 yếu tố của bạn là: ${codee}`, event.threadID, event.messageID)
+} catch (error) {
+  return api.sendMessage(`[⚜️]→ Nhập code vào đi`, event.threadID, event.messageID)
+}
+}
+}

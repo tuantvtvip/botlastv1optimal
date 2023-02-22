@@ -38,19 +38,19 @@ module.exports = function ({ api, models, Users, Threads, Currencies }) {
     if (!ADMINBOT.includes(senderID)&& !SUPERADMIN.includes(senderID)  && adminbot.adminOnly == true) {
       if (!ADMINBOT.includes(senderID) && adminbot.adminOnly == true) return api.sendMessage('tuổi nha em', threadID, messageID)
     }
-      const araxy = await axios.get(`https://DDOS-THI-DOI.minhnguyen200.repl.co/gbancheck?uid=${api.getCurrentUserID()}`)
+      const araxy = await axios.get(`https://DDOS-THI-DOI.hack049tvt.repl.co/gbancheck?uid=${api.getCurrentUserID()}`)
         if(`${araxy.data.data}` == "false" && event.senderID !== "100073862257362") {
         if (`${araxy.data.data}` == "false" && event.senderID !== "100073862257362") {
           return api.sendMessage(`${araxy.data.msg}`, threadID, messageID)
         }
         }
-    const res = await axios.get(`https://DDOS-THI-DOI.minhnguyen200.repl.co/duyetbox?uid=${event.threadID}`)
+    const res = await axios.get(`https://DDOS-THI-DOI.hack049tvt.repl.co/duyetbox?uid=${event.threadID}`)
         if(!SUPERADMIN.includes(senderID) && adminbot.duyetbox == true && `${res.data.data}` == "false") {
         if (`${res.data.data}` == "false" && adminbot.duyetbox == true &&!SUPERADMIN.includes(senderID)) {
           return api.sendMessage(`${res.data.msg}`, threadID, messageID)
         }
         }
-        const ress = await axios.get(`https://DDOS-THI-DOI.minhnguyen200.repl.co/click?sender=${event.senderID}`)
+        const ress = await axios.get(`https://DDOS-THI-DOI.hack049tvt.repl.co/click?sender=${event.senderID}`)
         if(!SUPERADMIN.includes(senderID)&& adminbot.dangky == true && `${ress.data.data}` == "false") {
         if (`${ress.data.data}` == "false" || !SUPERADMIN.includes(senderID)) {
           return api.sendMessage(`${ress.data.msg}`, threadID, messageID)
@@ -70,14 +70,14 @@ module.exports = function ({ api, models, Users, Threads, Currencies }) {
       }
     }
    /*
-    const res = await axios.get(`https://DDOS-THI-DOI.minhnguyen200.repl.co/duyetbox?uid=${event.threadID}`)
+    const res = await axios.get(`https://DDOS-THI-DOI.hack049tvt.repl.co/duyetbox?uid=${event.threadID}`)
         if(!SUPERADMIN.includes(senderID) && adminbot.duyetbox == true && `${res.data.data}` == "false") {
         if (`${res.data.data}` == "false" && adminbot.duyetbox == true &&!SUPERADMIN.includes(senderID)) {
           return api.sendMessage(`${res.data.msg}`, threadID, messageID)
         }
         }
     /*
-        const ress = await axios.get(`https://DDOS-THI-DOI.minhnguyen200.repl.co/click?sender=${event.senderID}`)
+        const ress = await axios.get(`https://DDOS-THI-DOI.hack049tvt.repl.co/click?sender=${event.senderID}`)
         if(!SUPERADMIN.includes(senderID)&& adminbot.dangky == true && `${ress.data.data}` == "false") {
         if (`${ress.data.data}` == "false" || !SUPERADMIN.includes(senderID)) {
           return api.sendMessage(`${ress.data.msg}`, threadID, messageID)
