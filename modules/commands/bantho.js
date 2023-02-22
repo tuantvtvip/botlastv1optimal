@@ -4,7 +4,7 @@ module.exports.config = {
 	hasPermssion: 0,
 	credits: "quên - rework by DMH dzai",
 	description: "Ảnh bàn thờ của đứa tag",
-	commandCategory: "tao ảnh",
+	commandCategory: "Edit-IMG",
 	usages: "@tag",
 	cooldowns: 5,
 	dependencies: {
